@@ -41,9 +41,8 @@ function Board({ nrows = 6, ncols = 6, chanceLightStartsOn = 0.1 }) {
   }
 
   function hasWon() {
-    board.map(x => {
-      
-    })
+    const check = board.map((x) => x.indexOf(false));
+    return check.find((y) => y === 0);
   }
 
   function flipCellsAround(x, y) {
@@ -57,25 +56,20 @@ function Board({ nrows = 6, ncols = 6, chanceLightStartsOn = 0.1 }) {
 
     setBoard((oldBoard) => {
       let boardCopy = oldBoard.map((arr) => [...arr]);
-
       const flipCell = (indexY, indexX) => {
         // if this coord is actually on board, flip it
         if (indexX >= 0 && indexX < ncols && indexY >= 0 && indexY < nrows) {
-          console.log(indexX, indexY, boardCopy[indexX][indexY]);
-
           boardCopy[indexY][indexX] = !boardCopy[indexY][indexX];
         }
       };
       changeIndx.map((indx) => {
         flipCell(indx[0] + x, indx[1] + y);
       });
-
       return boardCopy;
     });
   }
 
   // if the game is won, just show a winning msg & render nothing else
-
   if (hasWon()) return <h1>You Won</h1>;
   else
     return (
